@@ -1,0 +1,57 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Musicfy 
+  link(rel='stylesheet', href='/css/music.css')
+body#recordPage
+  .container
+    if error_msg
+    .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+      strong #{error_msg}
+      button.close(type='button' data-dismiss='alert' aria-label='Close')
+        span(aria-hidden='true') &times;
+    if success_msg
+    .alert.alert-success.alert-dismissible.fade.show(role='alert')
+      strong #{success_msg}
+      button.close(type='button' data-dismiss='alert' aria-label='Close')
+        span(aria-hidden='true') &times;
+        
+    .formContainer
+      h1#formheader Upload Your Music
+      form#uploadForm(action='/music', method='post')
+        label(for='photo') 
+        input#coverPhoto(type='file', name='coverPhoto', accept='image/*')
+
+        label(for="title")
+        input#user(type='text', name='title', placeholder='Song title')
+
+        label(for='artist') 
+        input#artist(type='text', name='artist', placeholder='Artist')
+
+        label(for='album') 
+        input#album(type='text', name='album', placeholder='Album')
+
+        label(for='yearOfRelease') 
+        input#yearOfRelease(type='number', name='yearOfRelease', placeholder='Year of release')
+
+        label(for='uploadAudioFile') 
+        input#yearOfRelease(type='file', name='uploadAudioFile', placeholder='Upload audio file')    
+        
+        button.btn.btn-primary#Add(type='submit') UPLOAD
+    .listOfMusic
+      if musicList.length > 0
+        each music in musicList
+          .song
+            .image
+            .songDetails
+              .songTitle #{music.title}
+              .details
+                span #{music.artist}
+                span &nbsp;·&nbsp; 
+                span #{music.album}
+                span &nbsp;·&nbsp; 
+                span #{music.year}
+            i.fas.fa-play
+      else
+        p No music uploaded yet.
